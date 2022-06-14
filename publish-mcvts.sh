@@ -1,9 +1,6 @@
 #/bin/bash
 
-if [ $# -ne 1 ]; then
-    echo "Expected one argument (the Microsoft Storage Account tenant id) e.g. './publish-mcvts.sh 012345'"
-    exit 1
-fi
+set -e
 
 jupyter nbconvert \
     --to html \
@@ -12,7 +9,6 @@ jupyter nbconvert \
     --execute \
     mcvts.ipynb
 
-azcopy login --tenant-id "$1"
 azcopy copy \
     "mcvts.html" \
     "https://mcvtsfbois.blob.core.windows.net/\$web/mcvts.html"
